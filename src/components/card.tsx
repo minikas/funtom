@@ -114,7 +114,7 @@ export const Card = ({
   };
 
   return (
-    <div className="flex flex-col gap-28 last:mr-28">
+    <div className="flex flex-col gap-28 last:mr-28 w-full">
       <div className="mt-[-50vh] h-[140vh]">
         <motion.div
           style={{ opacity, scale }}
@@ -153,12 +153,14 @@ export const Card = ({
             </motion.button>
           </div>
         </div>
-        <div
-          className="flex gap-8 cursor-grab select-none"
-          ref={containerRef}
-          style={{ transform: "translateX(0)" }}
-        >
-          {children}
+        <div className="max-w-screen overflow-hidden">
+          <div
+            className="flex gap-8 cursor-grab select-none mr-14"
+            ref={containerRef}
+            style={{ transform: "translateX(0)" }}
+          >
+            {children}
+          </div>
         </div>
       </div>
     </div>

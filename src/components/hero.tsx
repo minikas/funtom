@@ -31,7 +31,7 @@ export const Hero = () => {
 
 const Video = () => {
   return (
-    <div className="relative flex animate-[show_1.5s_linear] max-w-3xl mx-auto -mt-56 z-50">
+    <div className="relative flex animate-[show_1.5s_linear] max-w-3xl mx-auto -mt-40 z-50">
       <video autoPlay loop muted playsInline className="block w-[480px] h-full">
         <source
           src="https://cdn.sanity.io/files/3nm6d03a/production/86be57f4a08711b67a14aa345905ad9a84bf44da.webm#t=0.1"
