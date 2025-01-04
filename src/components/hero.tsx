@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { PropsWithChildren, useMemo } from "react";
+import { PropsWithChildren, useEffect, useMemo, useRef } from "react";
 import { motion } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/all";
 
 import { Chrome } from "./icons/chrome";
 import { LogoIcon } from "./icons/logoIcon";
@@ -10,15 +12,52 @@ import { LogoIcon } from "./icons/logoIcon";
 import { Button } from "@/components/ui/button";
 
 export const Hero = () => {
+  const heroRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.to(heroRef.current, {
+      scrollTrigger: {
+        trigger: heroRef.current,
+        start: "top top",
+        scrub: 1,
+      },
+      opacity: 0,
+      scale: 0.8,
+    });
+  }, []);
+
   return (
-    <div className="flex items-center gap-14 flex-col px-10 py-16">
-      <div className="text-center text-main-foreground flex flex-col items-center gap-4">
-        <p className="text-xl font-semibold opacity-75 animate-[show_1.5s_linear]">
-          The crypto wallet that&apos;ll take you places
-        </p>
-        <Title>Your * trusted companion</Title>
+    <section className="flex flex-col gap-5">
+      <div
+        ref={heroRef}
+        className="sticky top-0 flex items-center gap-14 flex-col px-10 py-16"
+      >
+        <div className="text-center text-main-foreground flex flex-col items-center gap-4">
+          <p className="text-xl font-semibold opacity-75 animate-[show_1.5s_linear]">
+            The crypto wallet that&apos;ll take you places
+          </p>
+          <Title>Your * trusted companion</Title>
+        </div>
+        <Extensions />
       </div>
-      <Extensions />
+      <Video />
+    </section>
+  );
+};
+
+const Video = () => {
+  return (
+    <div className="relative flex animate-[show_1.5s_linear] max-w-3xl mx-auto -mt-56">
+      <video autoPlay loop muted playsInline className="block w-[480px] h-full">
+        <source
+          src="https://cdn.sanity.io/files/3nm6d03a/production/86be57f4a08711b67a14aa345905ad9a84bf44da.webm#t=0.1"
+          type="video/webm"
+        />
+        <source
+          src="https://cdn.sanity.io/files/3nm6d03a/production/36085bc56da2e00839726f735620e994dc6a60c5.mp4#t=0.1"
+          type='video/mp4; codecs="hvc1"'
+        />
+      </video>
     </div>
   );
 };
@@ -37,7 +76,7 @@ const Extensions = () => (
         Download for Chrome
       </span>
     </Button>
-    <p className="text-xs opacity-60 max-w-[200px] mx-auto font-semibold text-main-foreground">
+    <p className="text-sm opacity-60 max-w-[200px] mx-auto font-semibold text-main-foreground">
       Also available on other browsers devices.
       <Link className="block" href="/">
         Discover more
