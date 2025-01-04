@@ -1,10 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { PropsWithChildren, useEffect, useMemo, useRef } from "react";
-import { motion } from "framer-motion";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/all";
+import { PropsWithChildren, useMemo } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 import { Chrome } from "./icons/chrome";
 import { LogoIcon } from "./icons/logoIcon";
@@ -12,24 +10,14 @@ import { LogoIcon } from "./icons/logoIcon";
 import { Button } from "@/components/ui/button";
 
 export const Hero = () => {
-  const heroRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-    gsap.to(heroRef.current, {
-      scrollTrigger: {
-        trigger: heroRef.current,
-        start: "top top",
-        scrub: 1,
-      },
-      opacity: 0,
-      scale: 0.8,
-    });
-  }, []);
+  const { scrollY } = useScroll();
+  const opacity = useTransform(scrollY, [0, 500], [1, 0]);
+  const scale = useTransform(scrollY, [0, 500], [1, 0.8]);
 
   return (
     <section className="flex flex-col gap-5">
-      <div
-        ref={heroRef}
+      <motion.div
+        style={{ opacity, scale }}
         className="sticky top-0 flex items-center gap-14 flex-col px-10 py-16"
       >
         <div className="text-center text-main-foreground flex flex-col items-center gap-4">
@@ -39,7 +27,7 @@ export const Hero = () => {
           <Title>Your * trusted companion</Title>
         </div>
         <Extensions />
-      </div>
+      </motion.div>
       <Video />
     </section>
   );
