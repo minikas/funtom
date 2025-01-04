@@ -8,7 +8,8 @@ import { cn } from "@/lib/utils";
 export const Title = ({
   children,
   small,
-}: PropsWithChildren<{ small?: boolean }>) => {
+  original,
+}: PropsWithChildren<{ small?: boolean; original?: boolean }>) => {
   const words = useMemo(() => children?.toString().split(" "), [children]);
 
   return (
@@ -27,9 +28,11 @@ export const Title = ({
               className="inline-block mr-5"
             >
               <LogoIcon
-                fill={small ? "white" : "hsl(var(--main))"}
-                eyeFill={small ? "hsl(var(--main))" : "#F5F2FF"}
-                className="h-[130px] w-[130px]"
+                fill={small && !original ? "white" : "hsl(var(--main))"}
+                eyeFill={small && !original ? "hsl(var(--main))" : "#F5F2FF"}
+                className={
+                  small ? "h-[100px] w-[100px] -mt-5" : "h-[130px] w-[130px]"
+                }
               />
             </motion.div>
           );
