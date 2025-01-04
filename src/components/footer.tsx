@@ -46,7 +46,7 @@ const BottomLinks = () => (
       <div className="flex flex-col gap-4 bg-foreground/5 rounded-xl p-8">
         <input
           placeholder="Enter your email"
-          className="text-6xl font-medium text-secondary bg-transparent w-full outline-none text-black placeholder:text-black/50"
+          className="text-6xl font-medium bg-transparent w-full outline-none text-black placeholder:text-black/50"
         />
         <div className="flex gap-20 items-center">
           <p className="text-md font-medium">
@@ -95,7 +95,7 @@ const BottomLinks = () => (
 
 const List = ({ items, children }: PropsWithChildren<{ items: string[] }>) => (
   <div className="flex flex-col gap-4">
-    <span className="font-semibold opacity-50">{children}</span>
+    <span className="font-medium opacity-50 text-sm">{children}</span>
     <ul className="flex flex-col gap-4">
       {items.map((e, i) => (
         <li key={i} className="text-[14px] font-medium">
@@ -112,7 +112,7 @@ const SocialList = ({
 }: PropsWithChildren<{ items: string[] }>) => {
   return (
     <div className="flex flex-col gap-4">
-      <span className="font-semibold opacity-50">{children}</span>
+      <span className="font-medium opacity-50 text-sm">{children}</span>
       <ul className="flex flex-col gap-4">
         {items.map((e, i) => {
           const IconCompnent = Icons[e as keyof typeof Icons];
