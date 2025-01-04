@@ -11,7 +11,11 @@ export const Extensions = () => {
   return (
     <div className="text-center flex flex-col items-center gap-3 animate-[show_1s_linear]">
       <motion.div
-        style={{ x, y, cursor: "pointer" }}
+        style={{
+          x,
+          y,
+          cursor: "pointer",
+        }}
         onMouseMove={(e) => {
           const rect = e.currentTarget.getBoundingClientRect();
           const originCenter = {
@@ -39,7 +43,7 @@ export const Extensions = () => {
           variant="white"
           className="[&_svg]:size-14 pl-3 pr-5"
         >
-          <span className="flex gap-2 text-[16px] font-semibold">
+          <span className="flex gap-2 text-[16.5px] font-medium">
             <Chrome className="w-40 h-40" />
             Download for Chrome
           </span>
