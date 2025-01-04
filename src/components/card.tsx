@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { PropsWithChildren, useEffect, useRef } from "react";
+import { PropsWithChildren, useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Wallet } from "lucide-react";
 
 import { Title } from "./title";
@@ -11,14 +11,33 @@ export const Card = ({
   children,
 }: PropsWithChildren<{ title: string }>) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
 
   const { scrollY } = useScroll();
   const opacity = useTransform(scrollY, [700, 1000], [0, 1]);
   const scale = useTransform(scrollY, [700, 1000], [0.8, 1]);
 
+  const checkScrollability = () => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const currentX = getComputedStyle(container).transform;
+    const matrix = currentX.match(/^matrix\((.+)\)$/);
+    const translateX = matrix ? parseFloat(matrix[1].split(", ")[4]) : 0;
+
+    const maxScroll = -(container.scrollWidth - container.clientWidth);
+
+    setCanScrollLeft(translateX < -1);
+    setCanScrollRight(translateX > maxScroll);
+  };
+
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
+
+    // Initial check
+    requestAnimationFrame(checkScrollability);
 
     let isMouseDown = false;
     let startX = 0;
@@ -42,6 +61,8 @@ export const Card = ({
       } else {
         container.style.transition = "none";
       }
+
+      requestAnimationFrame(checkScrollability);
     };
 
     const onMouseDown = (e: MouseEvent | TouchEvent) => {
@@ -84,9 +105,7 @@ export const Card = ({
     container.addEventListener("mouseleave", onMouseLeave);
 
     return () => {
-      container.removeEventListener("mousedown", onMouseDown);
       container.removeEventListener("touchstart", onMouseDown);
-      window.removeEventListener("mouseup", onMouseUp);
       window.removeEventListener("touchend", onMouseUp);
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("touchmove", onMouseMove);
@@ -111,6 +130,14 @@ export const Card = ({
 
     container.style.transform = `translateX(${newX}px)`;
     container.style.transition = "transform 0.3s ease-out";
+
+    requestAnimationFrame(checkScrollability);
+
+    container.addEventListener(
+      "transitionend",
+      () => requestAnimationFrame(checkScrollability),
+      { once: true }
+    );
   };
 
   return (
@@ -138,16 +165,20 @@ export const Card = ({
           </div>
           <div className="bg-white rounded-full p-1 flex items-center gap-1">
             <motion.button
-              className="bg-white/50 rounded-full p-2 hover:bg-white transition-all duration-300"
-              onClick={() => onMoveCard("left")}
-              whileTap={{ scale: 0.95 }}
+              className={`${canScrollLeft ? "bg-main/50 hover:bg-main" : "bg-white/50"} rounded-full p-2 transition-all duration-300`}
+              onClick={() => canScrollLeft && onMoveCard("left")}
+              whileTap={canScrollLeft ? { scale: 0.95 } : undefined}
+              style={{ opacity: canScrollLeft ? 1 : 0.6 }}
+              disabled={!canScrollLeft}
             >
               <ChevronLeft />
             </motion.button>
             <motion.button
-              className="bg-main/50 rounded-full p-2 hover:bg-main transition-all duration-300"
-              onClick={() => onMoveCard("right")}
-              whileTap={{ scale: 0.95 }}
+              className={`${canScrollRight ? "bg-main/50 hover:bg-main" : "bg-white/50"} rounded-full p-2 transition-all duration-300`}
+              onClick={() => canScrollRight && onMoveCard("right")}
+              whileTap={canScrollRight ? { scale: 0.95 } : undefined}
+              style={{ opacity: canScrollRight ? 1 : 0.6 }}
+              disabled={!canScrollRight}
             >
               <ChevronRight color="black" />
             </motion.button>
