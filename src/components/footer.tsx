@@ -12,7 +12,7 @@ import { Button } from "./ui/button";
 import * as Icons from "@/components/icons";
 export const Footer = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { amount: 0.2 });
+  const isInView = useInView(ref);
 
   useEffect(() => {
     if (isInView) document.body.style.backgroundColor = "hsl(var(--main))";

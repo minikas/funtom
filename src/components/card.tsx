@@ -1,8 +1,9 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Children, PropsWithChildren } from "react";
-import { ChevronLeft, ChevronRight, Wallet } from "lucide-react";
+import { Children, PropsWithChildren, ReactNode } from "react";
+import * as Icons from "lucide-react";
+import { LucideIcon } from "lucide-react";
 
 import { Subheading } from "./subheading";
 
@@ -11,23 +12,40 @@ import { useCards } from "@/hooks/useCards";
 
 export const Card = ({
   title,
+  subheading,
+  icon,
+  scrollStart,
+  scrollEnd,
+  cardsScrollStart,
+  cardsScrollEnd,
   children,
-}: PropsWithChildren<{ title: string }>) => {
+}: PropsWithChildren<{
+  title: string;
+  subheading: string;
+  icon: keyof typeof Icons;
+  scrollStart: number;
+  scrollEnd: number;
+  cardsScrollStart: number;
+  cardsScrollEnd: number;
+}>) => {
   const { containerRef, canScrollLeft, canScrollRight, onMoveCard } =
     useCards();
 
+  const IconComponent = Icons[icon] as LucideIcon;
   return (
     <div className="flex flex-col gap-28 last:mr-28 w-full">
       <div className="mt-[-50vh] h-[140vh]">
-        <Subheading>{title}</Subheading>
+        <Subheading scrollStart={scrollStart} scrollEnd={scrollEnd}>
+          {title}
+        </Subheading>
       </div>
 
       <div className="flex flex-col gap-14 w-full">
         <div className="flex justify-between px-14 animate-[show_2.5s_linear]">
           <div className="bg-white rounded-full py-2 px-4 flex items-center gap-2">
-            <Wallet size={24} />
+            <IconComponent size={24} />
             <span className="text-main-foreground font-semibold text-lg">
-              Your Wallet
+              {subheading}
             </span>
           </div>
           <div className="bg-white rounded-full p-1 flex items-center gap-1">
@@ -41,7 +59,7 @@ export const Card = ({
               style={{ opacity: canScrollLeft ? 1 : 0.6 }}
               disabled={!canScrollLeft}
             >
-              <ChevronLeft />
+              <Icons.ChevronLeft />
             </motion.button>
             <motion.button
               className={cn(
@@ -53,7 +71,7 @@ export const Card = ({
               style={{ opacity: canScrollRight ? 1 : 0.6 }}
               disabled={!canScrollRight}
             >
-              <ChevronRight color="black" />
+              <Icons.ChevronRight color="black" />
             </motion.button>
           </div>
         </div>
@@ -65,7 +83,12 @@ export const Card = ({
             viewport={{ once: true }}
           >
             {Children.map(children, (child, index) => (
-              <AnimatedCard key={index} index={index}>
+              <AnimatedCard
+                key={index}
+                index={index}
+                cardsScrollEnd={cardsScrollEnd}
+                cardsScrollStart={cardsScrollStart}
+              >
                 {child}
               </AnimatedCard>
             ))}
@@ -78,15 +101,19 @@ export const Card = ({
 
 const AnimatedCard = ({
   children,
+  cardsScrollStart,
+  cardsScrollEnd,
   index,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
+  cardsScrollStart: number;
+  cardsScrollEnd: number;
   index: number;
 }) => {
   const { scrollY } = useScroll();
   const x = useTransform(
     scrollY,
-    [2000, 2300],
+    [cardsScrollStart, cardsScrollEnd],
     [window.innerWidth / 3 + -index * 440, 0]
   );
 

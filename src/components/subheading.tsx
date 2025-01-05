@@ -1,12 +1,19 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ReactNode } from "react";
+import { PropsWithChildren } from "react";
 
 import { Title } from "./title";
 
-export const Subheading = ({ children }: { children: ReactNode }) => {
+export const Subheading = ({
+  children,
+  scrollStart,
+  scrollEnd,
+}: PropsWithChildren<{
+  scrollStart: number;
+  scrollEnd: number;
+}>) => {
   const { scrollY } = useScroll();
-  const opacity = useTransform(scrollY, [700, 1000], [0, 1]);
-  const scale = useTransform(scrollY, [700, 1000], [0.8, 1]);
+  const opacity = useTransform(scrollY, [scrollStart, scrollEnd], [0, 1]);
+  const scale = useTransform(scrollY, [scrollStart, scrollEnd], [0.8, 1]);
 
   return (
     <motion.div
