@@ -98,7 +98,7 @@ export const GenericCard = ({
       initial={{ x: 0, y: 0 }}
       className={cn(
         data[color].className,
-        "flex flex-col gap-14 rounded-3xl min-w-[450px] first:ml-14 last:mr-14 justify-between shadow-[0_8px_24px_-1px_rgba(0,0,0,0.1)]"
+        "flex flex-col gap-14 rounded-3xl min-w-[450px] h-full justify-between shadow-[0_8px_24px_-1px_rgba(0,0,0,0.1)]"
       )}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
