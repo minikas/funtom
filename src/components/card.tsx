@@ -77,7 +77,7 @@ export const Card = ({
         </div>
         <div className="max-w-screen overflow-hidden">
           <motion.div
-            className="flex gap-8 cursor-grab select-none mr-14 py-10 "
+            className="flex gap-8 cursor-grab select-none lg:mr-14 mr-5 lg:py-10 py-5 "
             ref={containerRef}
             style={{ transform: "translateX(0)" }}
             viewport={{ once: true }}

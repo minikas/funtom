@@ -16,13 +16,13 @@ export const Footer = () => {
 
   useEffect(() => {
     if (isInView) document.body.style.backgroundColor = "hsl(var(--main))";
-    else document.body.style.backgroundColor = "";
+    else document.body.style.backgroundColor = "hsl(var(--background))";
   }, [isInView]);
 
   return (
     <motion.footer
       ref={ref}
-      className="flex items-center gap-14 flex-col px-10 py-16"
+      className="flex lg:flex-col items-center gap-14 flex-col lg:px-10 px-0 py-16"
     >
       <div className="text-center text-main-foreground flex flex-col items-center gap-4">
         <p className="text-xl font-semibold opacity-75 animate-[show_1.5s_linear]">
@@ -37,19 +37,19 @@ export const Footer = () => {
 };
 
 const BottomLinks = () => (
-  <div className="flex gap-2 bg-white rounded-3xl w-full p-14">
-    <div className="flex-1 flex flex-col justify-between">
+  <div className="flex max-xl:flex-col-reverse gap-2 bg-white rounded-3xl w-full lg:p-14 p-5">
+    <div className="flex-1 flex xl:flex-col xl:items-start items-center justify-between">
       <LogoIcon className="w-16 h-16" />
       <p className="text-sm font-medium opacity-50">© Funtom 2024.</p>
     </div>
-    <div className="flex flex-col gap-12 flex-[2]">
+    <div className="flex flex-col gap-12 flex-[2] flex-wrap">
       <div className="flex flex-col gap-4 bg-foreground/5 rounded-xl p-8">
         <input
           placeholder="Enter your email"
-          className="text-6xl font-medium bg-transparent w-full outline-none text-black placeholder:text-black/50"
+          className="max-xl:text-4xl text-6xl font-medium bg-transparent w-full outline-none text-black placeholder:text-black/50"
         />
-        <div className="flex gap-20 items-center">
-          <p className="text-md font-medium">
+        <div className="flex lg:gap-20 gap-2 items-center justify-between">
+          <p className="lg:text-md text-sm font-medium">
             Sign up for our newsletter and join the growing tom community.
           </p>
           <Button rounded size="xl" variant="mainForeground">
@@ -57,7 +57,7 @@ const BottomLinks = () => (
           </Button>
         </div>
       </div>
-      <div className="flex gap-24">
+      <div className="flex gap-24 flex-wrap justify-between">
         <List items={["Download", "Security", "Support", "Feature Requests"]}>
           Company
         </List>

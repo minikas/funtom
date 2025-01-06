@@ -13,7 +13,12 @@ export const Title = ({
   const words = useMemo(() => children?.toString().split(" "), [children]);
 
   return (
-    <span className={cn("text-9xl font-semibold", small && "text-7xl")}>
+    <span
+      className={cn(
+        "max-xl:text-6xl text-9xl font-semibold",
+        small && "text-7xl"
+      )}
+    >
       {words?.map((word, index) => {
         if (word === "*")
           return (
@@ -31,7 +36,9 @@ export const Title = ({
                 fill={small && !original ? "white" : "hsl(var(--main))"}
                 eyeFill={small && !original ? "hsl(var(--main))" : "#F5F2FF"}
                 className={
-                  small ? "h-[100px] w-[100px] -mt-5" : "h-[130px] w-[130px]"
+                  small
+                    ? "max-xl:h-[80px] max-xl:w-[80px] h-[100px] w-[100px] -mt-5"
+                    : "max-xl:h-[90px] max-xl:w-[90px] h-[130px] w-[130px]"
                 }
               />
             </motion.div>

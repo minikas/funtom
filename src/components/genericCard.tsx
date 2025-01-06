@@ -24,8 +24,6 @@ export const GenericCard = ({
   const lastMousePosRef = useRef({ x: 0, y: 0 });
 
   const handleMouseEnter = async (e: React.MouseEvent) => {
-    // Allow new animations more frequently by removing the animation lock
-    // Only block if animation is currently in progress
     if (scope.current && scope.current.style.transform !== "none") return;
 
     if (videoRef.current) {
@@ -33,7 +31,6 @@ export const GenericCard = ({
         videoRef.current.currentTime = 0;
         await videoRef.current.play();
       } catch (error) {
-        // Handle any play() interruption errors silently
         console.debug("Video play interrupted:", error);
       }
     }
@@ -50,7 +47,6 @@ export const GenericCard = ({
     // Only animate if there's significant mouse movement
     if (Math.abs(moveX) < 2 && Math.abs(moveY) < 2) return;
 
-    // Normalize the movement vector and multiply by maxMove
     const magnitude = Math.sqrt(moveX * moveX + moveY * moveY);
     const normalizedX = magnitude ? (moveX / magnitude) * maxMove : 0;
     const normalizedY = magnitude ? (moveY / magnitude) * maxMove : 0;
@@ -105,13 +101,13 @@ export const GenericCard = ({
       initial={{ x: 0, y: 0 }}
       className={cn(
         data[color],
-        "flex flex-col gap-14 rounded-3xl min-w-[450px] h-full justify-between shadow-[0_8px_24px_-1px_rgba(0,0,0,0.1)]"
+        "flex flex-col gap-14 rounded-3xl min-w-[320px] lg:min-w-[450px] h-full justify-between shadow-[0_8px_24px_-1px_rgba(0,0,0,0.1)]"
       )}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <p className="text-3xl font-medium p-10">{children}</p>
-      <div className="max-h-96 w-full flex justify-center items-end">
+      <p className="lg:text-3xl text-2xl font-medium p-10">{children}</p>
+      <div className="lg:max-h-96 max-h-64 w-full flex justify-center items-end">
         <video
           ref={videoRef}
           playsInline
