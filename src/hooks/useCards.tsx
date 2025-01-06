@@ -25,9 +25,6 @@ export const useCards = () => {
     const container = containerRef.current;
     if (!container) return;
 
-    // Initial check
-    requestAnimationFrame(checkScrollability);
-
     let isMouseDown = false;
     let startX = 0;
     let currentX = 0;

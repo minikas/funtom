@@ -40,8 +40,8 @@ export default function Home() {
           title="Powerful * tools | made for everyone"
           subheading="Your web3 tools"
           icon="Globe"
-          scrollStart={2700}
-          scrollEnd={3000}
+          scrollStart={2900}
+          scrollEnd={3100}
         >
           {toolsCardsInfo?.map((card, i) => (
             <GenericCard
@@ -49,8 +49,8 @@ export default function Home() {
               color={card.color}
               sources={card.sources}
               index={i}
-              cardsScrollStart={3300}
-              cardsScrollEnd={3700}
+              cardsScrollStart={3400}
+              cardsScrollEnd={3800}
             >
               {card.text}
             </GenericCard>
@@ -60,8 +60,8 @@ export default function Home() {
           title="Controlled by you, | secured * by us"
           subheading="Your security"
           icon="Shield"
-          scrollStart={4100}
-          scrollEnd={4400}
+          scrollStart={4700}
+          scrollEnd={5000}
         >
           {securityCardsInfo?.map((card, i) => (
             <GenericCard
@@ -69,8 +69,8 @@ export default function Home() {
               color={card.color}
               sources={card.sources}
               index={i}
-              cardsScrollStart={4700}
-              cardsScrollEnd={5000}
+              cardsScrollStart={5300}
+              cardsScrollEnd={5700}
             >
               {card.text}
             </GenericCard>
