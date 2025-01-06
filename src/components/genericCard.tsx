@@ -1,7 +1,13 @@
 "use client";
 
-import { PropsWithChildren, useRef } from "react";
-import { motion, useAnimate } from "framer-motion";
+import {
+  MouseEvent,
+  PropsWithChildren,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { motion, useAnimate, useScroll, useTransform } from "framer-motion";
 
 import { cn } from "@/lib/utils";
 
@@ -14,16 +20,22 @@ export const GenericCard = ({
   children,
   color,
   sources,
+  cardsScrollStart,
+  cardsScrollEnd,
+  index,
 }: PropsWithChildren<{
   color: keyof typeof data;
   sources: Source[];
+  cardsScrollStart: number;
+  cardsScrollEnd: number;
+  index: number;
 }>) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [scope, animate] = useAnimate();
   const animatedRef = useRef(false);
   const lastMousePosRef = useRef({ x: 0, y: 0 });
 
-  const handleMouseEnter = async (e: React.MouseEvent) => {
+  const handleMouseEnter = async (e: MouseEvent) => {
     if (scope.current && scope.current.style.transform !== "none") return;
 
     if (videoRef.current) {
@@ -95,32 +107,60 @@ export const GenericCard = ({
     });
   };
 
+  const { scrollY } = useScroll();
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const x = useTransform(
+    scrollY,
+    [cardsScrollStart, cardsScrollEnd],
+    [windowWidth / 3 + -index * 440, 0]
+  );
+
   return (
     <motion.div
-      ref={scope}
-      initial={{ x: 0, y: 0 }}
-      className={cn(
-        data[color],
-        "flex flex-col gap-14 rounded-3xl min-w-[320px] lg:min-w-[450px] h-full justify-between shadow-[0_8px_24px_-1px_rgba(0,0,0,0.1)]"
-      )}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      className="first:ml-14"
+      style={{ x }}
+      transition={{
+        type: "spring",
+        stiffness: 100,
+        damping: 30,
+      }}
     >
-      <p className="lg:text-3xl text-2xl font-medium p-10">{children}</p>
-      <div className="lg:max-h-96 max-h-64 w-full flex justify-center items-end">
-        <video
-          ref={videoRef}
-          playsInline
-          loop
-          muted
-          preload="metadata"
-          className="w-full rounded-xl"
-        >
-          {sources.map((e, i) => (
-            <source key={i} src={e.src} type={e.type} />
-          ))}
-        </video>
-      </div>
+      <motion.div
+        ref={scope}
+        initial={{ x: 0, y: 0 }}
+        className={cn(
+          data[color],
+          "flex flex-col gap-14 rounded-3xl min-w-[320px] lg:min-w-[450px] h-full justify-between shadow-[0_8px_24px_-1px_rgba(0,0,0,0.1)]"
+        )}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        <p className="lg:text-3xl text-2xl font-medium p-10">{children}</p>
+        <div className="lg:max-h-96 max-h-64 w-full flex justify-center items-end">
+          <video
+            ref={videoRef}
+            playsInline
+            loop
+            muted
+            preload="metadata"
+            className="w-full rounded-xl"
+          >
+            {sources.map((e, i) => (
+              <source key={i} src={e.src} type={e.type} />
+            ))}
+          </video>
+        </div>
+      </motion.div>
     </motion.div>
   );
 };

@@ -1,3 +1,5 @@
+"use client";
+
 import { Header } from "../components/header";
 
 import { Card } from "@/components/card";
@@ -20,11 +22,16 @@ export default function Home() {
           icon="Wallet"
           scrollStart={700}
           scrollEnd={1000}
-          cardsScrollStart={2000}
-          cardsScrollEnd={2300}
         >
-          {walletCardsInfo.map((card, i) => (
-            <GenericCard key={i} color={card.color} sources={card.sources}>
+          {walletCardsInfo?.map((card, i) => (
+            <GenericCard
+              key={i}
+              color={card.color}
+              sources={card.sources}
+              index={i}
+              cardsScrollStart={2000}
+              cardsScrollEnd={2300}
+            >
               {card.text}
             </GenericCard>
           ))}
@@ -35,11 +42,16 @@ export default function Home() {
           icon="Globe"
           scrollStart={2700}
           scrollEnd={3000}
-          cardsScrollStart={3700}
-          cardsScrollEnd={4000}
         >
-          {toolsCardsInfo.map((card, i) => (
-            <GenericCard key={i} color={card.color} sources={card.sources}>
+          {toolsCardsInfo?.map((card, i) => (
+            <GenericCard
+              key={i}
+              color={card.color}
+              sources={card.sources}
+              index={i}
+              cardsScrollStart={3700}
+              cardsScrollEnd={4000}
+            >
               {card.text}
             </GenericCard>
           ))}
@@ -50,11 +62,16 @@ export default function Home() {
           icon="Shield"
           scrollStart={4500}
           scrollEnd={4900}
-          cardsScrollStart={5400}
-          cardsScrollEnd={5800}
         >
-          {securityCardsInfo.map((card, i) => (
-            <GenericCard key={i} color={card.color} sources={card.sources}>
+          {securityCardsInfo?.map((card, i) => (
+            <GenericCard
+              key={i}
+              color={card.color}
+              sources={card.sources}
+              index={i}
+              cardsScrollStart={5400}
+              cardsScrollEnd={5800}
+            >
               {card.text}
             </GenericCard>
           ))}

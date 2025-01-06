@@ -1,3 +1,5 @@
+"use client";
+
 import { PropsWithChildren, useMemo } from "react";
 import { motion } from "framer-motion";
 

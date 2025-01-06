@@ -1,9 +1,9 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { Children, PropsWithChildren, ReactNode } from "react";
+import { PropsWithChildren } from "react";
 import * as Icons from "lucide-react";
 import { LucideIcon } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 import { Subheading } from "./subheading";
 
@@ -16,8 +16,7 @@ export const Card = ({
   icon,
   scrollStart,
   scrollEnd,
-  cardsScrollStart,
-  cardsScrollEnd,
+
   children,
 }: PropsWithChildren<{
   title: string;
@@ -25,13 +24,12 @@ export const Card = ({
   icon: keyof typeof Icons;
   scrollStart: number;
   scrollEnd: number;
-  cardsScrollStart: number;
-  cardsScrollEnd: number;
 }>) => {
   const { containerRef, canScrollLeft, canScrollRight, onMoveCard } =
     useCards();
 
   const IconComponent = Icons[icon] as LucideIcon;
+
   return (
     <div className="flex flex-col gap-28 last:mr-28 w-full">
       <div className="mt-[-50vh] h-[140vh]">
@@ -82,16 +80,7 @@ export const Card = ({
             style={{ transform: "translateX(0)" }}
             viewport={{ once: true }}
           >
-            {Children.map(children, (child, index) => (
-              <AnimatedCard
-                key={index}
-                index={index}
-                cardsScrollEnd={cardsScrollEnd}
-                cardsScrollStart={cardsScrollStart}
-              >
-                {child}
-              </AnimatedCard>
-            ))}
+            {children}
           </motion.div>
         </div>
       </div>
@@ -99,17 +88,16 @@ export const Card = ({
   );
 };
 
-const AnimatedCard = ({
+export const AnimatedCard = ({
   children,
   cardsScrollStart,
   cardsScrollEnd,
   index,
-}: {
-  children: ReactNode;
+}: PropsWithChildren<{
   cardsScrollStart: number;
   cardsScrollEnd: number;
   index: number;
-}) => {
+}>) => {
   const { scrollY } = useScroll();
   const x = useTransform(
     scrollY,
