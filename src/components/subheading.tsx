@@ -19,7 +19,7 @@ export const Subheading = ({
   return (
     <motion.div
       style={{ opacity, scale }}
-      className="sticky top-1/2 -translate-y-1/2 flex items-center gap-14 flex-col"
+      className="sticky top-[40%] -translate-y-1/2 flex items-center gap-14 flex-col"
     >
       <div className="text-center text-main-foreground flex flex-col items-center gap-4">
         <Title small original>
