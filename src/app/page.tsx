@@ -60,8 +60,8 @@ export default function Home() {
           title="Controlled by you, | secured * by us"
           subheading="Your security"
           icon="Shield"
-          scrollStart={4700}
-          scrollEnd={5000}
+          scrollStart={4500}
+          scrollEnd={4700}
         >
           {securityCardsInfo?.map((card, i) => (
             <GenericCard
