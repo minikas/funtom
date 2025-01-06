@@ -29,8 +29,8 @@ export default function Home() {
               color={card.color}
               sources={card.sources}
               index={i}
-              cardsScrollStart={2000}
-              cardsScrollEnd={2300}
+              cardsScrollStart={1800}
+              cardsScrollEnd={2100}
             >
               {card.text}
             </GenericCard>
@@ -49,8 +49,8 @@ export default function Home() {
               color={card.color}
               sources={card.sources}
               index={i}
-              cardsScrollStart={3700}
-              cardsScrollEnd={4000}
+              cardsScrollStart={3300}
+              cardsScrollEnd={3700}
             >
               {card.text}
             </GenericCard>
@@ -60,8 +60,8 @@ export default function Home() {
           title="Controlled by you, | secured * by us"
           subheading="Your security"
           icon="Shield"
-          scrollStart={4500}
-          scrollEnd={4900}
+          scrollStart={4100}
+          scrollEnd={4400}
         >
           {securityCardsInfo?.map((card, i) => (
             <GenericCard
@@ -69,8 +69,8 @@ export default function Home() {
               color={card.color}
               sources={card.sources}
               index={i}
-              cardsScrollStart={5400}
-              cardsScrollEnd={5800}
+              cardsScrollStart={4700}
+              cardsScrollEnd={5000}
             >
               {card.text}
             </GenericCard>

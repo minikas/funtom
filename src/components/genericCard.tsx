@@ -144,13 +144,13 @@ export const GenericCard = ({
         initial={{ x: 0, y: 0 }}
         className={cn(
           data[color],
-          "flex flex-col gap-14 rounded-3xl min-w-[320px] lg:min-w-[450px] h-full justify-between shadow-[0_8px_24px_-1px_rgba(0,0,0,0.1)]"
+          "flex flex-col gap-14 rounded-3xl min-w-[320px] lg:min-w-[380px] 2xl:min-w-[450px] h-full justify-between shadow-[0_8px_24px_-1px_rgba(0,0,0,0.1)]"
         )}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <p className="lg:text-3xl text-2xl font-medium p-10">{children}</p>
-        <div className="lg:max-h-96 max-h-64 w-full flex justify-center items-end">
+        <p className="lg:text-3xl text-2xl font-medium p-10 z-10">{children}</p>
+        <div className="2xl:max-h-96 max-h-64 w-full flex justify-center items-end">
           <video
             ref={videoRef}
             playsInline

@@ -3,11 +3,11 @@ export const walletCardsInfo = [
     color: "purple" as const,
     sources: [
       {
-        src: "https://cdn.sanity.io/files/3nm6d03a/production/326e94141dfe4241a8f8ac6ece1f6d1e19f66d33.mp4#t=0.1",
-        type: "video/mp4; codecs='hvc1'",
+        src: "https://cdn.sanity.io/files/3nm6d03a/production/0fda37a1da9cb6fb491d213be80fa8937530ff07.mp4#t=0.1",
+        type: 'video/mp4; codecs="hvc1"',
       },
       {
-        src: "https://cdn.sanity.io/files/3nm6d03a/production/1899070b6094700924d635fff944add871716d35.webm#t=0.1",
+        src: "https://cdn.sanity.io/files/3nm6d03a/production/c0004d979a7981cb1e78388368da034570af528d.webm#t=0.1",
         type: "video/webm",
       },
     ],
