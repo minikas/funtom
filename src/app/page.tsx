@@ -11,6 +11,19 @@ import { toolsCardsInfo } from "@/static/toolsCardsInfo";
 import { securityCardsInfo } from "@/static/securityCardsInfo";
 
 export default function Home() {
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+
+  const scrollValues = {
+    tools: {
+      start: isMobile ? 2300 : 2900,
+      end: isMobile ? 2500 : 3100,
+    },
+    security: {
+      start: isMobile ? 3600 : 4500,
+      end: isMobile ? 3800 : 4700,
+    },
+  };
+
   return (
     <div className="min-h-screen font-[family-name:var(--font-montserrat)]">
       <Header />
@@ -40,8 +53,8 @@ export default function Home() {
           title="Powerful * tools | made for everyone"
           subheading="Your web3 tools"
           icon="Globe"
-          scrollStart={2900}
-          scrollEnd={3100}
+          scrollStart={scrollValues.tools.start}
+          scrollEnd={scrollValues.tools.end}
         >
           {toolsCardsInfo?.map((card, i) => (
             <GenericCard
@@ -60,8 +73,8 @@ export default function Home() {
           title="Controlled by you, | secured * by us"
           subheading="Your security"
           icon="Shield"
-          scrollStart={4500}
-          scrollEnd={4700}
+          scrollStart={scrollValues.security.start}
+          scrollEnd={scrollValues.security.end}
         >
           {securityCardsInfo?.map((card, i) => (
             <GenericCard
