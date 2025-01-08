@@ -106,7 +106,6 @@ export const GenericCard = ({
       },
     });
   };
-
   const { scrollY } = useScroll();
   const [windowWidth, setWindowWidth] = useState(0);
 
@@ -126,12 +125,12 @@ export const GenericCard = ({
   const x = useTransform(
     scrollY,
     [cardsScrollStart, cardsScrollEnd],
-    [windowWidth / 3 + -index * 440, 0]
+    windowWidth >= 800 ? [windowWidth / 3 + -index * 440, 0] : [0, 0]
   );
 
   return (
     <motion.div
-      className="first:ml-14"
+      className="first:ml-5 md:first:ml-14"
       style={{ x }}
       transition={{
         type: "spring",

@@ -3,7 +3,7 @@
 import { PropsWithChildren } from "react";
 import * as Icons from "lucide-react";
 import { LucideIcon } from "lucide-react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 
 import { Subheading } from "./subheading";
 
@@ -38,8 +38,8 @@ export const Card = ({
         </Subheading>
       </div>
 
-      <div className="flex flex-col gap-14 w-full">
-        <div className="flex justify-between px-14 animate-[show_2.5s_linear]">
+      <div className="flex flex-col gap-5 md:gap-14 w-full">
+        <div className="flex justify-between px-5 md:px-14 animate-[show_2.5s_linear]">
           <div className="bg-white rounded-full py-2 px-4 flex items-center gap-2">
             <IconComponent size={24} />
             <span className="text-main-foreground font-semibold text-lg">
@@ -85,37 +85,5 @@ export const Card = ({
         </div>
       </div>
     </div>
-  );
-};
-
-export const AnimatedCard = ({
-  children,
-  cardsScrollStart,
-  cardsScrollEnd,
-  index,
-}: PropsWithChildren<{
-  cardsScrollStart: number;
-  cardsScrollEnd: number;
-  index: number;
-}>) => {
-  const { scrollY } = useScroll();
-  const x = useTransform(
-    scrollY,
-    [cardsScrollStart, cardsScrollEnd],
-    [window.innerWidth / 3 + -index * 440, 0]
-  );
-
-  return (
-    <motion.div
-      className="first:ml-14"
-      style={{ x }}
-      transition={{
-        type: "spring",
-        stiffness: 100,
-        damping: 30,
-      }}
-    >
-      {children}
-    </motion.div>
   );
 };

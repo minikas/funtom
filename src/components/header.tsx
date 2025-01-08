@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 export const Header = () => {
   const [state, setState] = useState(false);
   return (
-    <header className="flex items-center justify-between px-10 py-5 animate-[show_2.5s_linear]">
+    <header className="flex items-center justify-between px-5 py-3 md:px-10 md:py-5 animate-[show_2.5s_linear]">
       <div className="flex items-center gap-28">
         <Link href="/" className="w-40">
           <Logo fill="#3c315b" />
