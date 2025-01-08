@@ -1,6 +1,6 @@
 "use client";
 
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import * as Icons from "lucide-react";
 import { LucideIcon } from "lucide-react";
 import { motion } from "framer-motion";
@@ -16,7 +16,6 @@ export const Card = ({
   icon,
   scrollStart,
   scrollEnd,
-
   children,
 }: PropsWithChildren<{
   title: string;
@@ -27,8 +26,18 @@ export const Card = ({
 }>) => {
   const { containerRef, canScrollLeft, canScrollRight, onMoveCard } =
     useCards();
+  const [allowScroll, setAllowScroll] = useState(false);
 
   const IconComponent = Icons[icon] as LucideIcon;
+
+  useEffect(() => {
+    if (!allowScroll) return;
+    const handleTouch = (event: TouchEvent) => event.stopPropagation();
+
+    document.documentElement.addEventListener("touchmove", handleTouch);
+    return () =>
+      document.documentElement.removeEventListener("touchmove", handleTouch);
+  }, [allowScroll]);
 
   return (
     <div className="flex flex-col gap-28 last:mr-28 w-full">
@@ -75,10 +84,15 @@ export const Card = ({
         </div>
         <div className="max-w-screen overflow-hidden">
           <motion.div
-            className="flex gap-8 cursor-grab select-none lg:mr-14 mr-5 lg:py-10 py-5 "
+            className="flex gap-8 cursor-grab select-none lg:mr-14 mr-5 lg:py-10 py-5"
             ref={containerRef}
             style={{ transform: "translateX(0)" }}
             viewport={{ once: true }}
+            dragDirectionLock
+            drag="x"
+            onDragStart={(_, info) =>
+              setAllowScroll(Math.abs(info.delta.y) > Math.abs(info.delta.x))
+            }
           >
             {children}
           </motion.div>
